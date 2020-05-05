@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projekt #1 z Dziedziuchem</title>
+    <style>
+        * { 
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+        }
+        button {
+            border: none;
+        }
+        .slider {
+            /* margin: 0 auto; */
+            position: relative;
+        }
+        .slider__counter {
+            text-align: center;
+            font-size: 2rem;
+            font-family: Arial, sans-serif;
+        }
+        .slider__button {
+            width: 60px;
+            height: 60px;
+            background-color: #41b883;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .slider__button:hover {
+            background-color: #369b6d;
+        }
+        .slider__button--prev {
+            left: 0;
+        }
+        .slider__button--next {
+            right: 0;
+        }
+        .slider__button:disabled {
+            background-color: #41b883;
+            opacity: 50%;
+            cursor:unset;
+        }
+        .arrow {
+            border: solid black;
+            border-width: 0 3px 3px 0;
+            display: inline-block;
+            padding: 3px;
+        }
+        .arrow__right {
+            transform: rotate(-45deg);
+        }
+
+        .arrow__left {
+            transform: rotate(135deg);
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="slider">
+        <img class="slider__image" src="" alt="">
+        <div class="slider__counter">1/5</div>
+        <button class="slider__button slider__button--prev">
+            <div>
+                <i class="arrow arrow__left"></i>
+            </div>
+        </button>
+        <button class="slider__button slider__button--next">
+            <div>
+                <i class="arrow arrow__right"></i>
+            </div>
+        </button>
+    </div>
+    <script>
+        var prevBtn = document.querySelector(".slider__button--prev");
+        var nextBtn = document.querySelector(".slider__button--next");
+        var image = document.querySelector(".slider__image");
+        var counter = document.querySelector(".slider__counter");
+        var index = 0;
+        var pictures = [
+            { url: "https://picsum.photos/id/1002/800/600", alt: "Earth"},
+            { url: "https://picsum.photos/id/1004/800/600", alt: "Kissing Couple"},
+            { url: "https://picsum.photos/id/1011/800/600", alt: "Girl Paddling"},
+            { url: "https://picsum.photos/id/1021/800/600", alt: "Mountain forrest in clouds"},
+            { url: "https://picsum.photos/id/103/800/600", alt: "Relaxing in park - legs"},
+        ];
+        function loadImage(index) {
+            image.src = pictures[index].url;
+            image.alt = pictures[index].alt;
+        }
+        
+        function checkButtonState() {
+            if(index == 0) {
+                prevBtn.disabled = true;
+            } else {
+                prevBtn.disabled = false;
+            }
+            if(index == pictures.length - 1) {
+                nextBtn.disabled = true;
+            } else {
+                nextBtn.disabled = false;
+            }
+        }
+        nextBtn.addEventListener("click", function(){
+            if(index < pictures.length) {
+               index++; 
+               loadImage(index);
+               checkButtonState();
+               counterText();
+            }
+        });
+
+        prevBtn.addEventListener("click", function(){
+            if(index > 0) {
+               index--; 
+               loadImage(index);
+               checkButtonState();
+               counterText();
+            }
+        });
+        function counterText() {
+            counter.textContent = `${index + 1} / ${pictures.length}`
+        }
+
+        loadImage(0);
+        checkButtonState();
+        counterText();
+
+    </script>
+</body>
+</html>
